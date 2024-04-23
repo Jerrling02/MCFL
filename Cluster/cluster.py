@@ -39,48 +39,23 @@ def make_clients(args,n_samples, cmp_cap, com_cap):
 #                 n_features=2,
 #                 centers=5)
 def cluster(n_samples, centers,args,clients_bds):
-# n_samples=100
-# centers=5
-    '''随机生成'''
+
     cmp_cap= [[0]*3 for i in range(n_samples)]
-    com_cap= [[0] for i in range(n_samples)]
-    # 如果 client_num 大于列表长度，提示错误信息
-    if n_samples > len(clients_bds):
-        print("Error: Sampling size exceeds the length of the list.")
-    else:
-        # 随机采样不重复的元素
-        bds_sampled_list = random.sample(clients_bds, n_samples)
-        # print("Sampled list:", bds_sampled_list)
+    com_cap= [[0]*3 for i in range(n_samples)]
     for i in range(n_samples):
-        # U
+        #U
         cmp_cap[i][0]= random.randint(20,25)
         #frequency
         cmp_cap[i][1] = random.uniform(1000000, 2000000)
         #delta
         cmp_cap[i][2] = random.randint(1,5)
         #Badwidth
-        client_bd=bds_sampled_list[i]
-        # 如果列表长度小于50，输出错误信息
-        # if len(client_bd) < 50:
-        #     print("Error: List length is less than 50.")
-        # else:
-        #     # 随机选择起始索引
-        #     start_index = random.randint(0, len(client_bd) - 50)
-        #     # 从起始索引开始选择长度为50的片段
-        #     sampled_segment = client_bd[start_index:start_index + 50]
-        com_cap[i][0] = client_bd
-        # # com_cap[i][0] = random.randint(1, 10)
-        # #power
-        # com_cap[i][1] = random.randint(20, 40)
-        # #gain
-        # dis= random.uniform(100,500)
-        # com_cap[i][2] = -128.1 -37.6*math.log10(dis)
-
-    '''固定性能'''
-    # with open('./Cluster/com_cmp.json') as fp:
-    #     load_dict = json.load(fp)
-    #     com_cap = load_dict["com_cap_2"]
-    #     cmp_cap = load_dict["cmp_cap_2"]
+        com_cap[i][0] = random.randint(1, 10)
+        #power
+        com_cap[i][1] = random.randint(20, 40)
+        #gain
+        dis= random.uniform(100,500)
+        com_cap[i][2] = -128.1 -37.6*math.log10(dis)
 
     X, cmp_time = make_clients(args,n_samples=n_samples,cmp_cap=cmp_cap,com_cap=com_cap)
     n_clusters = centers
